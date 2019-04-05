@@ -1,0 +1,32 @@
+<ng-container *myUnless="loginSrv.isAutenticated">
+  <form #logForm="ngForm" class="form-inline my-2 my-lg-0">
+    <div class="input-group" role="group" aria-label="Login Form">
+      <input class="form-control-sm" [size]="8" type="text" [(ngModel)]="txtUsuario" required minlength="4" placeholder="Usuario"
+        [ngModelOptions]="{standalone: true}">
+      <input class="form-control-sm" [size]="8" type="password" [(ngModel)]="txtPassword" required minlength="4" placeholder="Contraseña"
+        [ngModelOptions]="{standalone: true}">
+      <div class="input-group-append">
+        <input class="btn btn-outline-success btn-sm" type="button" [disabled]="logForm.invalid" value="Enviar" (click)="logInOut()">
+        <input class="btn btn-outline-success btn-sm" type="button" value="Registrar" (click)="registrar(content)">
+      </div>
+    </div>
+  </form>
+</ng-container>
+<small *ngIf="loginSrv.isAutenticated">
+  Hola {{loginSrv.Name}}
+  <input class="btn btn-outline-success btn-sm" type="button" value="Desconectar" (click)="logInOut()">
+</small>
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Registrar Usuario</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-register-user #register></app-register-user>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="sendRegistrar(register, modal)">Save</button>
+    </div>
+  </ng-template>

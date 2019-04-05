@@ -1,0 +1,15 @@
+<table>
+  <tr>
+    <th>Nombre</th>
+    <td><input *ngIf="auth.isAutenticated" type="button" value="Nuevo" routerLink="add"></td>
+  </tr>
+  <tr *ngFor="let item of VM.Listado">
+    <td>
+      <a routerLink="{{item.id}}/{{item.nombre}}-{{item.apellidos}}">
+      {{item.nombre}} {{item.apellidos}}</a></td>
+    <td>
+      <input type="button" value="Editar" [routerLink]="[item.id, 'edit']">
+      <input *ngIf="auth.isAutenticated" type="button" value="Borrar" (myWinConfirm)="VM.delete(item.id)" myWinConfirmMessage="Desde la plantilla">
+    </td>
+  </tr>
+</table>

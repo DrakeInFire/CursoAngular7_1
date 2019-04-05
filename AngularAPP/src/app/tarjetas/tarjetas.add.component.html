@@ -1,0 +1,40 @@
+
+<form #tarjetaForm="ngForm">
+
+  ID:
+    <input type="text" id="id" name="id" [(ngModel)]="VM.Elemento.id" #id="ngModel"
+      required naturalNumber/>
+      <span class="error" [hidden]="!id.hasError('required') || tarjetaForm.pristine" >Es obligatorio</span>
+      <span class="error" [myShow]="id?.errors?.naturalNumber">No es natural</span>
+  <br>
+
+  ID CLIENTE:
+  <input type="text" id="idCliente" name="idCliente" [(ngModel)]="VM.Elemento.idCliente" #idCliente="ngModel"
+      required minlength="4"/>
+      <span class="error" [hidden]="!idCliente.hasError('required') || tarjetaForm.pristine" >Es obligatorio</span>
+      <span class="error" [myShow]="idCliente?.errors?.minlength">Tamaño minimo 4</span>
+  <br>
+
+  NUMERO:
+  <input type="text" id="numero" name="numero" [(ngModel)]="VM.Elemento.numero" #numero="ngModel"
+      required naturalNumber minlength="10"/>
+      <span class="error" [hidden]="!numero.hasError('required') || tarjetaForm.pristine" >Es obligatorio</span>
+      <span class="error" [myShow]="numero?.errors?.naturalNumber">Ha de ser numero natural</span>
+      <span class="error" [myShow]="!numero?.errors?.naturalNumber && numero?.errors?.minlength">Tamaño minimo 10</span>
+  <br>
+
+  CADUCIDAD:
+  <input type="text" id="caducida" name="caducida" [(ngModel)]="VM.Elemento.caducida" #caducida="ngModel"/>
+  <br>
+
+  CVC_CVV
+  <input type="text" id="CVC_CVV" name="CVC_CVV" [(ngModel)]="VM.Elemento.CVC_CVV" #CVC_CVV="ngModel"/>
+  <br>
+
+  TIPO
+  <input type="text" id="tipo" name="tipo" [(ngModel)]="VM.Elemento.tipo" #tipo="ngModel"/>
+  <br>
+
+  <input type="button" value="PRINT" (click)="VM.print()">
+
+</form>

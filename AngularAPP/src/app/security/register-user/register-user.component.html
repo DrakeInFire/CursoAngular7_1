@@ -1,0 +1,57 @@
+<form [formGroup]="miForm" [class.is-invalid]="miForm.invalid" (submit)="send()">
+  <div class="form-group" [class.is-invalid]="miForm.hasError('customMsg', 'idUsuario')">
+    <label>User:
+    </label>
+    <input class="form-control" [class.is-invalid]="miForm.hasError('customMsg', 'idUsuario')" type="text"
+      formControlName="idUsuario">
+    <span class="invalid-feedback"
+      [class.is-invalid]="miForm.hasError('customMsg', 'idUsuario')">{{miForm.getError('customMsg', 'idUsuario')}}</span>
+      {{miForm.get('idUsuario')?.errors | json}}
+  </div>
+  <div class="form-group">
+    <label>Name:
+    </label>
+    <input class="form-control" [class.is-invalid]="miForm.hasError('customMsg', 'nombre')" type="text"
+      formControlName="nombre">
+    <span class="invalid-feedback" [class.is-invalid]="miForm.hasError('customMsg', 'nombre')">{{miForm.getError('customMsg', 'nombre')}}</span>
+    {{miForm.get('nombre')?.errors | json}}
+  </div>
+  <fieldset formGroupName="password">
+    <div class="form-group">
+      <label>Password:
+      </label>
+      <input class="form-control" type="password" formControlName="passwordValue" [class.is-invalid]="miForm.hasError('customMsg', ['password','passwordValue'])">
+      <span class="invalid-feedback" [class.is-invalid]="miForm.hasError('customMsg', ['password','passwordValue'])">{{miForm.getError('customMsg', ['password','passwordValue'])}}</span>
+      passwordValue: {{miForm?.get('password')?.get('passwordValue')?.errors | json}}
+    </div>
+    <div class="form-group">
+      <label>Confirm Password:
+      </label>
+      <input class="form-control" type="password" formControlName="passwordConfirm" [class.is-invalid]="miForm.hasError('customMsg', ['password','passwordConfirm'])">
+      <span class="invalid-feedback" [class.is-invalid]="miForm.hasError('customMsg', ['password','passwordConfirm']) || miForm.hasError('mismatch', 'password')">{{miForm.getError('customMsg', ['password','passwordConfirm'])}}</span>
+      passwordConfirm: {{miForm?.get('password')?.get('passwordConfirm')?.errors | json}}
+      <span [hidden]="!miForm.hasError('mismatch', 'password')">No coincide con la contraseña</span>
+    </div>
+    password: {{miForm?.get('password')?.errors | json}}
+  </fieldset>
+  <div formArrayName="roles">
+    <h4>Roles
+      <button type="button" class="btn btn-info btn-sm" (click)="addRole()">Add Role</button>
+    </h4>
+
+    <ul *ngFor="let row of $any(miForm.get('roles')).controls; let i=index" [formGroupName]="i">
+      <li>Rol #{{i + 1}}:
+        <div class="form-group">
+          <select class="form-control" formControlName="role">
+            <option>Usuarios</option>
+            <option>Administradores</option>
+          </select>{{row?.get('role')?.errors | json}}
+          <button type="button" class="close" aria-label="Close" (click)="deleteRole(i)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- <button type="submit" class="btn btn-outline-primary" >Send</button> -->
+</form>{{ miForm.value | json }}
